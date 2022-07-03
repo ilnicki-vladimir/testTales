@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { debugDraw } from "../utils/debug";
 
 export default class Game extends Phaser.Scene {
   private cursor: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -13,19 +14,13 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    // this.add.image(20, 20, "tiles");
     const map = this.make.tilemap({ key: "DungeonTiles" });
-    const tileset = map.addTilesetImage("DungeonTiles", "tiles");
+    const tileset = map.addTilesetImage("DungeonTiles", "tiles", 16, 16);
     map.createLayer("Grounds", tileset);
     const wallsLayer = map.createLayer("Walls", tileset);
     wallsLayer.setCollisionByProperty({ collision: true });
 
-    const debugGraphics = this.add.graphics().setAlpha(0.7);
-    wallsLayer.renderDebug(debugGraphics, {
-      tileColor: null,
-      collidingTileColor: new Phaser.Display.Color(243, 234, 48, 255),
-      faceColor: new Phaser.Display.Color(40, 39, 37, 255),
-    });
+    // debugDraw(wallsLayer, this);
 
     this.faune = this.physics.add.sprite(128, 128, "faune", "walk-down-3.png");
     this.faune.body.setSize(this.faune.width * 0.5, this.faune.height * 0.8);
@@ -110,7 +105,9 @@ export default class Game extends Phaser.Scene {
       this.faune.anims.play("faune-run-down", true);
       this.faune.setVelocity(0, speed);
     } else {
-      this.faune.play("faune-idle-down");
+      const parts = this.faune.anims.currentAnim.key.split("-");
+      parts[1] = "idle";
+      this.faune.play(parts.join("-"));
       this.faune.setVelocity(0, 0);
     }
   }
