@@ -42,6 +42,8 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
   }
 
   preUpdate(time: number, delta: number): void {
+    super.preUpdate(time, delta);
+
     switch (this.healthState) {
       case HealthState.IDLE:
         break;
@@ -83,7 +85,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     } else {
       const parts = this.anims.currentAnim.key.split("-");
       parts[1] = "idle";
-      this.play(parts.join("-"));
+      this.anims.play(parts.join("-"));
       this.setVelocity(0, 0);
     }
   }

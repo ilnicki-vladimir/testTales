@@ -20,6 +20,7 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
+    this.scene.run("game-ui");
     createCharacterAnims(this.anims);
     createLizardAnims(this.anims);
 
@@ -32,10 +33,6 @@ export default class Game extends Phaser.Scene {
     // debugDraw(wallsLayer, this);
 
     this.faune = this.add.faune(128, 128, "faune");
-
-    // this.faune = this.physics.add.sprite(128, 128, "faune", "walk-down-3.png");
-    // this.faune.body.setSize(this.faune.width * 0.5, this.faune.height * 0.8);
-    // this.faune.anims.play("faune-run-side");
 
     this.cameras.main.startFollow(this.faune, true);
 
