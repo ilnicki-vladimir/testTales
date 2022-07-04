@@ -1,8 +1,6 @@
 import Phaser from "phaser";
 
-export const createCharacterAnims = (
-  anims: Phaser.Animations.AnimationManager
-) => {
+export const createCharacterAnims = (anims: Phaser.Animations.AnimationManager) => {
   anims.create({
     key: "faune-idle-down",
     frames: [{ key: "faune", frame: "walk-down-3.png" }],

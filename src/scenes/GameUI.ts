@@ -24,18 +24,10 @@ export default class GameUI extends Phaser.Scene {
       quantity: 3,
     });
 
-    sceneEvents.on(
-      "player-health-changed",
-      this.handlePlayerHealthChanged,
-      this
-    );
+    sceneEvents.on("player-health-changed", this.handlePlayerHealthChanged, this);
 
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      sceneEvents.off(
-        "player-health-changed",
-        this.handlePlayerHealthChanged,
-        this
-      );
+      sceneEvents.off("player-health-changed", this.handlePlayerHealthChanged, this);
     });
   }
 
