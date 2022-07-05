@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser from 'phaser';
 
 declare global {
   namespace Phaser.GameObjects {
@@ -29,7 +29,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
     super(scene, x, y, texture, frame);
 
-    this.anims.play("faune-run-side");
+    this.anims.play('faune-run-side');
   }
 
   setKnives(knives: Phaser.Physics.Arcade.Group) {
@@ -49,7 +49,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     if (this._health <= 0) {
       //todo: die
       this.healthState = HealthState.DEAD;
-      this.play("faune-faint");
+      this.play('faune-faint');
       this.setVelocity(0, 0);
     } else {
       this.setVelocity(dir.x, dir.y);
@@ -65,19 +65,19 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     if (!this.knives) {
       return;
     }
-    const parts = this.anims.currentAnim.key.split("-");
+    const parts = this.anims.currentAnim.key.split('-');
     const direction = parts[2];
 
     const vec = new Phaser.Math.Vector2(0, 0);
     switch (direction) {
-      case "up":
+      case 'up':
         vec.y = -1;
         break;
-      case "down":
+      case 'down':
         vec.y = 1;
         break;
       default:
-      case "side":
+      case 'side':
         if (this.scaleX < 0) {
           vec.x = -1;
         } else {
@@ -87,7 +87,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     }
 
     const angle = vec.angle();
-    const knife = this.knives.get(this.x, this.y, "knife") as Phaser.Physics.Arcade.Image;
+    const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image;
 
     knife.setActive(true);
     knife.setVisible(true);
@@ -129,32 +129,32 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     }
     const speed = 100;
     if (cursor.left?.isDown) {
-      this.anims.play("faune-run-side", true);
+      this.anims.play('faune-run-side', true);
       this.setVelocity(-speed, 0);
       this.scaleX = -1;
       this.body.offset.x = 24;
     } else if (cursor.right?.isDown) {
-      this.anims.play("faune-run-side", true);
+      this.anims.play('faune-run-side', true);
       this.setVelocity(speed, 0);
       this.scaleX = 1;
       this.body.offset.x = 8;
     } else if (cursor.up?.isDown) {
-      this.anims.play("faune-run-up", true);
+      this.anims.play('faune-run-up', true);
       this.setVelocity(0, -speed);
     } else if (cursor.down?.isDown) {
-      this.anims.play("faune-run-down", true);
+      this.anims.play('faune-run-down', true);
       this.setVelocity(0, speed);
     } else {
-      const parts = this.anims.currentAnim.key.split("-");
-      parts[1] = "idle";
-      this.anims.play(parts.join("-"));
+      const parts = this.anims.currentAnim.key.split('-');
+      parts[1] = 'idle';
+      this.anims.play(parts.join('-'));
       this.setVelocity(0, 0);
     }
   }
 }
 
 Phaser.GameObjects.GameObjectFactory.register(
-  "faune",
+  'faune',
   function (
     this: Phaser.GameObjects.GameObjectFactory,
     x: number,

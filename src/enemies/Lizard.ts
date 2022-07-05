@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+import Phaser from 'phaser';
 
 enum Direction {
   UP,
@@ -22,13 +22,9 @@ export default class Lizard extends Phaser.Physics.Arcade.Sprite {
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
     super(scene, x, y, texture, frame);
 
-    this.anims.play("lizard-idle");
+    this.anims.play('lizard-idle');
 
-    scene.physics.world.on(
-      Phaser.Physics.Arcade.Events.TILE_COLLIDE,
-      this.handlerTileCollision,
-      this
-    );
+    scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handlerTileCollision, this);
 
     this.moveEvent = scene.time.addEvent({
       delay: 2000,

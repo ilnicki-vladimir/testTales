@@ -1,15 +1,15 @@
-import Phaser from "phaser";
+import Phaser from 'phaser';
 
-import Preloader from "./scenes/Preloader";
-import Game from "./scenes/Game";
-import GameUI from "./scenes/GameUI";
+import Preloader from './scenes/Preloader';
+import Game from './scenes/Game';
+import GameUI from './scenes/GameUI';
 
 const config = {
   type: Phaser.AUTO,
   width: 800,
   height: 500,
   physics: {
-    default: "arcade",
+    default: 'arcade',
     arcade: {
       gravity: { y: 0 },
       debug: true,
