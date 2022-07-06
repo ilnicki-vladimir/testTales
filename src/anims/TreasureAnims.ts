@@ -5,7 +5,7 @@ export const createChestAnim = (anims: Phaser.Animations.AnimationManager) => {
     key: 'chest-open',
     frames: anims.generateFrameNames('treasure', {
       start: 0,
-      end: 1,
+      end: 2,
       prefix: 'chest_empty_open_anim_f',
       suffix: '.png',
     }),

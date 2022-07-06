@@ -9,6 +9,7 @@ import '../characters/Faune';
 import Faune from '../characters/Faune';
 
 import { sceneEvents } from '../events/EventCenter';
+import { Chest } from '../items/Chest';
 
 export default class Game extends Phaser.Scene {
   private cursor: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -40,13 +41,16 @@ export default class Game extends Phaser.Scene {
 
     this.knives = this.physics.add.group({
       classType: Phaser.Physics.Arcade.Image,
+      maxSize: 3,
     });
 
     const wallsLayer = map.createLayer('Walls', tileset);
     wallsLayer.setCollisionByProperty({ collision: true });
 
-    const chests = this.physics.add.staticGroup();
-    const chestLayer = map.getObjectLayer('Chest');
+    const chests = this.physics.add.staticGroup({
+      classType: Chest,
+    });
+    const chestLayer = map.getObjectLayer('Chests');
     chestLayer.objects.forEach((chestObj) => {
       chests.get(
         chestObj.x! + chestObj.width! * 0.5,
@@ -71,12 +75,15 @@ export default class Game extends Phaser.Scene {
       },
     });
 
-    this.lizards.get(180, 50, 'lizard');
+    const lizardsLayer = map.getObjectLayer('Lizards');
+    lizardsLayer.objects.forEach((lizObj) => {
+      this.lizards.get(lizObj.x! + lizObj.width * 0.5, lizObj.y! - lizObj.height! * 0.5, 'lizard');
+    });
 
     this.physics.add.collider(this.faune, wallsLayer);
     this.physics.add.collider(this.lizards, wallsLayer);
 
-    this.physics.add.collider(this.faune, chests);
+    this.physics.add.collider(this.faune, chests, this.handlerPlayerChestCollision, undefined, this);
 
     this.physics.add.collider(this.knives, wallsLayer, this.handlerKnifeWallCollision, undefined, this);
     this.physics.add.collider(this.knives, this.lizards, this.handlerKnifeLizardCollision, undefined, this);
@@ -88,6 +95,11 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
+  }
+
+  private handlerPlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+    const chest = obj2 as Chest;
+    this.faune.setChest(chest);
   }
 
   private handlerKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
