@@ -10,6 +10,7 @@ import Faune from '../characters/Faune';
 
 import { sceneEvents } from '../events/EventCenter';
 import { Chest } from '../items/Chest';
+import AnimatedTiles from 'phaser-animated-tiles/dist/AnimatedTiles';
 
 export default class Game extends Phaser.Scene {
   private cursor: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -25,6 +26,7 @@ export default class Game extends Phaser.Scene {
 
   preload() {
     this.cursor = this.input.keyboard.createCursorKeys();
+    this.load.scenePlugin('animatedTiles', AnimatedTiles, 'animatedTiles', 'animatedTiles');
   }
 
   create() {
@@ -95,6 +97,9 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
+
+    this.animatedTiles.init(map);
+    this.animatedTiles.updateAnimatedTiles(map);
   }
 
   private handlerPlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
@@ -103,12 +108,15 @@ export default class Game extends Phaser.Scene {
   }
 
   private handlerKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-    this.knives.killAndHide(obj1);
+    // this.knives.killAndHide(obj1);
+    obj1.destroy();
   }
 
   private handlerKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-    this.knives.killAndHide(obj1);
-    this.lizards.killAndHide(obj2);
+    // this.knives.killAndHide(obj1);
+    // this.lizards.killAndHide(obj2);
+    obj1.destroy();
+    obj2.destroy();
   }
 
   private handlerPlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {

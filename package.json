@@ -25,7 +25,8 @@
 		"typescript": "^4.7.4"
 	},
 	"dependencies": {
-		"phaser": "^3.55.2"
+		"phaser": "^3.55.2",
+		"phaser-animated-tiles": "^2.0.2"
 	},
 	"parcelCleanPaths": [
 		"dist"
