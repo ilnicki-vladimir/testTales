@@ -17,6 +17,10 @@ export default class Preloader extends Phaser.Scene {
     this.load.image('ui-heart-full', 'ui/ui_heart_full.png');
 
     this.load.image('knife', 'weapons/weapon_knife.png');
+
+    this.load.audio('mainTheme', 'sound/videoplayback.mp3');
+    this.load.audio('hit', 'sound/hit.wav');
+    this.load.audio('coins', 'sound/coins.wav');
   }
 
   create() {

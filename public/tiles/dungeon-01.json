@@ -480,7 +480,11 @@
                         {
                          "duration":100,
                          "tileid":58
-                        }, 
+                        }],
+                 "id":55
+                }, 
+                {
+                 "animation":[
                         {
                          "duration":100,
                          "tileid":59
@@ -497,7 +501,7 @@
                          "duration":100,
                          "tileid":62
                         }],
-                 "id":55
+                 "id":59
                 }, 
                 {
                  "id":64,
@@ -579,7 +583,11 @@
                         {
                          "duration":100,
                          "tileid":90
-                        }, 
+                        }],
+                 "id":87
+                }, 
+                {
+                 "animation":[
                         {
                          "duration":100,
                          "tileid":91
@@ -596,7 +604,7 @@
                          "duration":100,
                          "tileid":94
                         }],
-                 "id":87
+                 "id":91
                 }, 
                 {
                  "id":96,
@@ -678,7 +686,11 @@
                         {
                          "duration":100,
                          "tileid":122
-                        }, 
+                        }],
+                 "id":119
+                }, 
+                {
+                 "animation":[
                         {
                          "duration":100,
                          "tileid":123
@@ -695,7 +707,7 @@
                          "duration":100,
                          "tileid":126
                         }],
-                 "id":119
+                 "id":123
                 }, 
                 {
                  "id":128,
@@ -840,7 +852,11 @@
                         {
                          "duration":100,
                          "tileid":186
-                        }, 
+                        }],
+                 "id":183
+                }, 
+                {
+                 "animation":[
                         {
                          "duration":100,
                          "tileid":187
@@ -857,7 +873,7 @@
                          "duration":100,
                          "tileid":190
                         }],
-                 "id":183
+                 "id":187
                 }, 
                 {
                  "id":192,
@@ -1291,7 +1307,11 @@
                         {
                          "duration":100,
                          "tileid":762
-                        }, 
+                        }],
+                 "id":759
+                }, 
+                {
+                 "animation":[
                         {
                          "duration":100,
                          "tileid":763
@@ -1308,7 +1328,7 @@
                          "duration":100,
                          "tileid":766
                         }],
-                 "id":759
+                 "id":763
                 }, 
                 {
                  "animation":[

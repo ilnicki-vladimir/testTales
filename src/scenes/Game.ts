@@ -18,6 +18,10 @@ export default class Game extends Phaser.Scene {
   private knives!: Phaser.Physics.Arcade.Group;
   private lizards!: Phaser.Physics.Arcade.Group;
 
+  private audio;
+  private audioHit;
+  private audioCoins;
+
   private playerLizardsCollides?: Phaser.Physics.Arcade.Collider;
 
   constructor() {
@@ -31,6 +35,9 @@ export default class Game extends Phaser.Scene {
 
   create() {
     this.scene.run('game-ui');
+    this.audio = this.sound.add('mainTheme');
+    this.audioHit = this.sound.add('hit');
+    this.audioCoins = this.sound.add('coins');
 
     createCharacterAnims(this.anims);
     createLizardAnims(this.anims);
@@ -97,7 +104,7 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
-
+    this.audio.play();
     this.animatedTiles.init(map);
     this.animatedTiles.updateAnimatedTiles(map);
   }
@@ -105,6 +112,7 @@ export default class Game extends Phaser.Scene {
   private handlerPlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
     const chest = obj2 as Chest;
     this.faune.setChest(chest);
+    this.audioCoins.play();
   }
 
   private handlerKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
@@ -117,6 +125,7 @@ export default class Game extends Phaser.Scene {
     // this.lizards.killAndHide(obj2);
     obj1.destroy();
     obj2.destroy();
+    this.audioHit.play();
   }
 
   private handlerPlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
