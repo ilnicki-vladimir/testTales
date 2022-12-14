@@ -1,7 +1,10 @@
 import Phaser from 'phaser';
-import { Chest } from '../items/Chest';
+import { Chest, Interactive } from '../items/Chest';
 
 import { sceneEvents } from '../events/EventCenter';
+import { Character } from '../core/classes/Character';
+import { HealthState } from '../core/enums/healt-state';
+import { OnInit } from '../core/interfaces/OnInit.interface';
 
 declare global {
   namespace Phaser.GameObjects {
@@ -11,34 +14,16 @@ declare global {
   }
 }
 
-enum HealthState {
-  IDLE,
-  DAMAGE,
-  DEAD,
-}
-
-export default class Faune extends Phaser.Physics.Arcade.Sprite {
-  private healthState = HealthState.IDLE;
+export default class Faune extends Character implements OnInit {
+  private interactWith: Interactive;
   private damageTime = 0;
-
-  private _health = 3;
   private _coins = 0;
-
-  private knives?: Phaser.Physics.Arcade.Group;
   private activeChest?: Chest;
 
-  get health() {
-    return this._health;
-  }
-
-  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
-    super(scene, x, y, texture, frame);
-
+  init() {
+    this.speed = 100;
+    this.health = 3
     this.anims.play('faune-run-side');
-  }
-
-  setKnives(knives: Phaser.Physics.Arcade.Group) {
-    this.knives = knives;
   }
 
   setChest(chest: Chest) {
@@ -70,48 +55,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  private throwKnife() {
-    if (!this.knives) {
-      return;
-    }
-    const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image;
-    if (!knife) {
-      return;
-    }
-
-    const parts = this.anims.currentAnim.key.split('-');
-    const direction = parts[2];
-
-    const vec = new Phaser.Math.Vector2(0, 0);
-    switch (direction) {
-      case 'up':
-        vec.y = -1;
-        break;
-      case 'down':
-        vec.y = 1;
-        break;
-      default:
-      case 'side':
-        if (this.scaleX < 0) {
-          vec.x = -1;
-        } else {
-          vec.x = 1;
-        }
-        break;
-    }
-
-    const angle = vec.angle();
-
-    knife.setActive(true);
-    knife.setVisible(true);
-
-    knife.setRotation(angle);
-    knife.x += vec.x * 16;
-    knife.y += vec.y * 16;
-
-    knife.setVelocity(vec.x * 300, vec.y * 300);
-  }
-
   preUpdate(time: number, delta: number): void {
     super.preUpdate(time, delta);
 
@@ -129,6 +72,11 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  addCoins(coins: number) {
+    this._coins += coins;
+    sceneEvents.emit('player-coins-changed', this._coins);
+  }
+
   update(cursor: Phaser.Types.Input.Keyboard.CursorKeys) {
     if (this.healthState === HealthState.DAMAGE || this.healthState === HealthState.DEAD) {
       return;
@@ -136,38 +84,34 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     if (!cursor) {
       return;
     }
-    if (Phaser.Input.Keyboard.JustDown(cursor.space!)) {
-      if (this.activeChest) {
-        const coins = this.activeChest.open();
-        this._coins += coins;
-
-        sceneEvents.emit('player-coins-changed', this._coins);
+    if (Phaser.Input.Keyboard.JustDown(cursor.space)) {
+      if (this.interactWith) {
+        this.interactWith.interact(this)
       } else {
-        this.throwKnife();
+        this.hit();
       }
       return;
     }
-    const speed = 100;
     const leftDown = cursor.left?.isDown;
     const rightDown = cursor.right?.isDown;
     const upDown = cursor.up?.isDown;
     const downDown = cursor.down?.isDown;
     if (leftDown) {
       this.anims.play('faune-run-side', true);
-      this.setVelocity(-speed, 0);
+      this.setVelocity(-this.speed, 0);
       this.scaleX = -1;
       this.body.offset.x = 24;
     } else if (rightDown) {
       this.anims.play('faune-run-side', true);
-      this.setVelocity(speed, 0);
+      this.setVelocity(this.speed, 0);
       this.scaleX = 1;
       this.body.offset.x = 8;
     } else if (upDown) {
       this.anims.play('faune-run-up', true);
-      this.setVelocity(0, -speed);
+      this.setVelocity(0, -this.speed);
     } else if (downDown) {
       this.anims.play('faune-run-down', true);
-      this.setVelocity(0, speed);
+      this.setVelocity(0, this.speed);
     } else {
       const parts = this.anims.currentAnim.key.split('-');
       parts[1] = 'idle';
@@ -178,6 +122,14 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     if (leftDown || rightDown || upDown || downDown) {
       this.activeChest = undefined;
     }
+  }
+
+  startInteract(interactive: Interactive) {
+    this.interactWith = interactive;
+  }
+
+  stopInteract() {
+    this.interactWith = null;
   }
 }
 
@@ -190,7 +142,7 @@ Phaser.GameObjects.GameObjectFactory.register(
     texture: string,
     frame?: string | number
   ) {
-    var sprite = new Faune(this.scene, x, y, texture, frame);
+    const sprite = new Faune(this.scene, x, y, texture, frame);
 
     this.displayList.add(sprite);
     this.updateList.add(sprite);

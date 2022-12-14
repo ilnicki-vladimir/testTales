@@ -1,0 +1,23 @@
+{
+	"root": true,
+	"parserOptions": {
+		"ecmaVersion": 2021,
+		"sourceType": "module",
+		"project": ["./tsconfig.json"]
+	},
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"plugins": ["@typescript-eslint"],
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/eslint-recommended",
+		"plugin:@typescript-eslint/recommended"
+	],
+	"parser": "@typescript-eslint/parser",
+	"rules": {
+		"@typescript-eslint/no-loss-of-precision": "off",
+		"@typescript-eslint/ban-types": "off"
+	}
+}
