@@ -18,9 +18,9 @@ export default class Game extends Phaser.Scene {
   private knives!: Phaser.Physics.Arcade.Group;
   private lizards!: Phaser.Physics.Arcade.Group;
 
-  private audio;
-  private audioHit;
-  private audioCoins;
+  private audio: Phaser.Sound.BaseSound;
+  private audioHit: Phaser.Sound.BaseSound;
+  private audioCoins: Phaser.Sound.BaseSound;
 
   private playerLizardsCollides?: Phaser.Physics.Arcade.Collider;
 
