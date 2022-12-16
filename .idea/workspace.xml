@@ -5,43 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8aff81eb-bf59-4245-8a96-7a4c36f25859" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.eslintrc.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/testTales.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.parcel-cache/2bff92bd3b4a2c98.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.parcel-cache/49acf4ad2dd59777" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.parcel-cache/6ab9bb5524060e62" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/classes/Character.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/classes/Collidable.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/classes/Factory.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/classes/GameObject.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/classes/Image.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/classes/Knifes.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/classes/MovableSprite.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/classes/Sprite.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/classes/Weapon.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/collisions/collisions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/contants/constants.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/enums/direction.enum.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/enums/healt-state.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/interfaces/CollisionConfig.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/interfaces/OnInit.interface.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/utils/utils.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc.js" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/classes/Scene.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/core/enums/character-type.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/characters/Faune.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/Faune.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/classes/Character.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Character.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/classes/Factory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Factory.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/classes/Knifes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Knifes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/classes/MovableSprite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/MovableSprite.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/classes/Sprite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Sprite.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/classes/Weapon.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Weapon.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/collisions/collisions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/collisions/collisions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/enums/direction.enum.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/enums/direction.enum.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/core/interfaces/CollisionConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/interfaces/CollisionConfig.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/enemies/Lizard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/enemies/Lizard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/items/Chest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/items/Chest.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scenes/Game.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/scenes/Game.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,25 +66,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "js.linters.configure.manually.selectedeslint": "true",
-    "last_opened_file_path": "/Users/saaya/Documents/test-apps/testTales",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "/Users/saaya/Documents/test-apps/testTales/node_modules/eslint",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
-    "ts.external.directory.path": "/Users/saaya/Documents/test-apps/testTales/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;js.linters.configure.manually.selectedeslint&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/saaya/Documents/test-apps/testTales&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;/Users/saaya/Documents/test-apps/testTales/node_modules/eslint&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.javascript.linters.eslint&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/saaya/Documents/test-apps/testTales/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/core/interfaces" />
@@ -127,5 +108,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -3,6 +3,9 @@ import { Sprite } from '../core/classes/Sprite';
 import { OnInit } from '../core/interfaces/OnInit.interface';
 import { Character } from '../core/classes/Character';
 import Faune from '../characters/Faune';
+import Game from '../scenes/Game';
+import { Chests } from '../core/classes/Knifes';
+import { Image } from '../core/classes/Image';
 
 export interface Interactive {
   interact(character: Character): void;
@@ -24,6 +27,9 @@ export class Chest extends Sprite implements OnInit, Interactive {
       this.playInteractSound()
       faune.addCoins(Phaser.Math.Between(50, 200))
       this.opened = true;
+      const chestsWeapon = this.scene.gameObjectFactory.create(Chests, {maxSize: 3, classType: Image})
+      faune.setWeapon(chestsWeapon);
+      this.destroy();
     }
   }
 }

@@ -7,7 +7,7 @@ import { CollisionConfig } from './core/interfaces/CollisionConfig';
 
 Phaser.GameObjects.Group.prototype['addCollisions'] = function(configs: CollisionConfig[]) {
   for(const config of configs) {
-    this.scene.physics.add.collider(this, config.collideWith, config.collideCallback)
+    this.scene.physics.add.collider(this, config.collideWith, config.collideCallback, config.collideProcess)
   }
 }
 

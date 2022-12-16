@@ -13,23 +13,22 @@ import { Knifes } from '../core/classes/Knifes';
 import { Image } from '../core/classes/Image';
 import { Group, StaticGroup } from '../core/classes/GameObject';
 import {
-  GameObjectFactory
+  GameObjectFactory, SpriteFactory
 } from '../core/classes/Factory';
 import {
   handlerFauneChestCollision,
-  handlerKnifeLizardCollision,
-  handlerKnifeWallCollision,
-  handlerPlayerLizardCollision
+  handlerPlayerLizardCollision, handlerTileCollision
 } from '../core/collisions/collisions';
+import { ThrowableWeapon } from '../core/classes/Weapon';
+import { Scene } from '../core/classes/Scene';
 
-export default class Game extends Phaser.Scene {
+export default class Game extends Scene {
   private cursor: Phaser.Types.Input.Keyboard.CursorKeys;
   private faune!: Faune;
-
-  private gameObjectFactory: GameObjectFactory;
+  private spriteFactory: SpriteFactory;
 
   private audio;
-  private animatedTiles;
+  private animatedTiles: AnimatedTiles;
 
   constructor() {
     super('game');
@@ -41,7 +40,8 @@ export default class Game extends Phaser.Scene {
   }
 
   create() {
-    this.gameObjectFactory = new GameObjectFactory(this.physics.world, this);
+    this._gameObjectFactory = new GameObjectFactory(this.physics.world, this);
+    this.spriteFactory = new SpriteFactory(this);
     this.scene.run('game-ui');
     this.audio = this.sound.add('mainTheme');
 
@@ -56,6 +56,7 @@ export default class Game extends Phaser.Scene {
 
     const wallsLayer = map.createLayer('Walls', tileset);
     wallsLayer.setCollisionByProperty({ collision: true });
+    this.tiles.push(wallsLayer);
 
     const chests = this.gameObjectFactory.create<StaticGroup<Chest>>(StaticGroup, {
       classType: Chest
@@ -71,10 +72,7 @@ export default class Game extends Phaser.Scene {
       );
     });
 
-    this.faune = this.add.faune(128, 128, 'faune');
-
-    const defaultFauneWeapon: Knifes = this.gameObjectFactory.create(Knifes, { classType: Image, maxSize: 3 })
-    this.faune.setWeapon(defaultFauneWeapon);
+    this.faune = this.add.faune(128, 128, 'faune')
 
     this.cameras.main.startFollow(this.faune, true);
 
@@ -85,6 +83,8 @@ export default class Game extends Phaser.Scene {
       },
     });
 
+    this.enemies.push(lizards)
+
     const lizardsLayer = map.getObjectLayer('Lizards');
     lizardsLayer.objects.forEach((lizObj) => {
       lizards.get(lizObj.x! + lizObj.width * 0.5, lizObj.y! - lizObj.height! * 0.5, 'lizard');
@@ -94,22 +94,18 @@ export default class Game extends Phaser.Scene {
       { collideWith: wallsLayer },
       { collideWith: chests, collideCallback: handlerFauneChestCollision
       },
-      {collideWith: lizards,
-      collideCallback: handlerPlayerLizardCollision}
-      ])
-
-    lizards.addCollisions([{ collideWith: wallsLayer }])
-
-    defaultFauneWeapon.addCollisions([
-      {
-        collideWith: wallsLayer,
-        collideCallback: handlerKnifeWallCollision
-      },
       {
         collideWith: lizards,
-        collideCallback: handlerKnifeLizardCollision
+        collideCallback: handlerPlayerLizardCollision,
+        collideProcess: (faune: Faune) => faune.health > 0
       }
       ])
+
+    lizards.addCollisions([{ collideWith: wallsLayer, collideCallback: handlerTileCollision }])
+
+
+    const defaultFauneWeapon: ThrowableWeapon = this.gameObjectFactory.create(Knifes, { classType: Image, maxSize: 3 })
+    this.faune.setWeapon(defaultFauneWeapon);
 
     this.audio.play();
     this.animatedTiles.init(map);

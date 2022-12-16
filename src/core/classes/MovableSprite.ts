@@ -4,6 +4,6 @@ import Phaser from 'phaser';
 
 export class MovableSprite extends Sprite {
   protected speed: number;
-  protected direction: Direction;
+  public direction = new Phaser.Math.Vector2();
   protected moveEvent: Phaser.Time.TimerEvent;
 }
