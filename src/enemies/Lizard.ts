@@ -1,32 +1,22 @@
-import Phaser from 'phaser';
+import { Direction } from '../core/enums/direction.enum';
+import { OnInit } from '../core/interfaces/OnInit.interface';
+import { randomDirection } from '../utils/utils';
+import { DEFAULT_SPEED } from '../core/contants/constants';
+import { Character } from '../core/classes/Character';
+import { CharacterType } from '../core/enums/character-type';
+import { HealthState } from '../core/enums/healt-state';
 
-enum Direction {
-  UP,
-  DOWN,
-  LEFT,
-  RIGHT,
-}
+export default class Lizard extends Character implements OnInit {
+  characterType = CharacterType.Enemy;
+  direction = new Phaser.Math.Vector2(1,0);
+  speed = DEFAULT_SPEED;
 
-const randomDirection = (exclude: Direction) => {
-  let newDirection = Phaser.Math.Between(0, 3);
-  while (newDirection === exclude) {
-    newDirection = Phaser.Math.Between(0, 3);
-  }
-  return newDirection;
-};
-
-export default class Lizard extends Phaser.Physics.Arcade.Sprite {
-  private direction = Direction.RIGHT;
-  private moveEvent: Phaser.Time.TimerEvent;
-
-  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
-    super(scene, x, y, texture, frame);
-
+  init() {
+    this.hitSound = this.scene.sound.add('hit');
     this.anims.play('lizard-idle');
+    this.health = 2;
 
-    scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handlerTileCollision, this);
-
-    this.moveEvent = scene.time.addEvent({
+    this.moveEvent = this.scene.time.addEvent({
       delay: 2000,
       callback: () => {
         this.direction = randomDirection(this.direction);
@@ -35,36 +25,18 @@ export default class Lizard extends Phaser.Physics.Arcade.Sprite {
     });
   }
 
+  preUpdate(time: number, delta: number): void {
+    super.preUpdate(time, delta);
+    if(this.healthState === HealthState.IDLE) {
+      const { x, y } = this.direction;
+      const speed = x && y ? this.speed / Math.sqrt(2) : this.speed
+      const dir = this.direction.clone().scale(speed);
+      this.setVelocity(dir.x,dir.y)
+    }
+  }
+
   destroy(fromScene?: boolean): void {
     this.moveEvent.destroy();
     super.destroy(fromScene);
-  }
-
-  private handlerTileCollision(go: Phaser.GameObjects.GameObject, tile: Phaser.Tilemaps.Tile) {
-    if (go !== this) {
-      return;
-    }
-
-    this.direction = randomDirection(this.direction);
-  }
-
-  preUpdate(time: number, delta: number): void {
-    super.preUpdate(time, delta);
-
-    const speed = 50;
-    switch (this.direction) {
-      case Direction.UP:
-        this.setVelocity(0, -speed);
-        break;
-      case Direction.DOWN:
-        this.setVelocity(0, speed);
-        break;
-      case Direction.LEFT:
-        this.setVelocity(-speed, 0);
-        break;
-      case Direction.RIGHT:
-        this.setVelocity(speed, 0);
-        break;
-    }
   }
 }

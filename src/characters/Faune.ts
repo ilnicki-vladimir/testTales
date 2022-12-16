@@ -1,7 +1,14 @@
 import Phaser from 'phaser';
-import { Chest } from '../items/Chest';
+import { Interactive } from '../items/Chest';
 
 import { sceneEvents } from '../events/EventCenter';
+import { Character } from '../core/classes/Character';
+import { HealthState } from '../core/enums/healt-state';
+import { OnInit } from '../core/interfaces/OnInit.interface';
+import { CharacterType } from '../core/enums/character-type';
+import { Scene } from '../core/classes/Scene';
+
+const directions = []
 
 declare global {
   namespace Phaser.GameObjects {
@@ -11,121 +18,26 @@ declare global {
   }
 }
 
-enum HealthState {
-  IDLE,
-  DAMAGE,
-  DEAD,
-}
-
-export default class Faune extends Phaser.Physics.Arcade.Sprite {
-  private healthState = HealthState.IDLE;
-  private damageTime = 0;
-
-  private _health = 3;
+export default class Faune extends Character implements OnInit {
+  characterType = CharacterType.Main;
+  private interactWith: Interactive;
   private _coins = 0;
 
-  private knives?: Phaser.Physics.Arcade.Group;
-  private activeChest?: Chest;
-
-  get health() {
-    return this._health;
-  }
-
-  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | number) {
-    super(scene, x, y, texture, frame);
-
+  init() {
+    this.speed = 100;
+    this.health = 3
     this.anims.play('faune-run-side');
   }
 
-  setKnives(knives: Phaser.Physics.Arcade.Group) {
-    this.knives = knives;
-  }
-
-  setChest(chest: Chest) {
-    this.activeChest = chest;
+  addCoins(coins: number) {
+    this._coins += coins;
+    sceneEvents.emit('player-coins-changed', this._coins);
   }
 
   handleDamage(dir: Phaser.Math.Vector2) {
-    if (this._health <= 0) {
-      return;
-    }
-    if (this.healthState === HealthState.DAMAGE) {
-      return;
-    }
-
-    --this._health;
-
-    if (this._health <= 0) {
-      //todo: die
-      this.healthState = HealthState.DEAD;
+    super.handleDamage(dir);
+    if(this.healthState === HealthState.DEAD) {
       this.play('faune-faint');
-      this.setVelocity(0, 0);
-    } else {
-      this.setVelocity(dir.x, dir.y);
-
-      this.setTint(0xff0000);
-
-      this.healthState = HealthState.DAMAGE;
-      this.damageTime = 0;
-    }
-  }
-
-  private throwKnife() {
-    if (!this.knives) {
-      return;
-    }
-    const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image;
-    if (!knife) {
-      return;
-    }
-
-    const parts = this.anims.currentAnim.key.split('-');
-    const direction = parts[2];
-
-    const vec = new Phaser.Math.Vector2(0, 0);
-    switch (direction) {
-      case 'up':
-        vec.y = -1;
-        break;
-      case 'down':
-        vec.y = 1;
-        break;
-      default:
-      case 'side':
-        if (this.scaleX < 0) {
-          vec.x = -1;
-        } else {
-          vec.x = 1;
-        }
-        break;
-    }
-
-    const angle = vec.angle();
-
-    knife.setActive(true);
-    knife.setVisible(true);
-
-    knife.setRotation(angle);
-    knife.x += vec.x * 16;
-    knife.y += vec.y * 16;
-
-    knife.setVelocity(vec.x * 300, vec.y * 300);
-  }
-
-  preUpdate(time: number, delta: number): void {
-    super.preUpdate(time, delta);
-
-    switch (this.healthState) {
-      case HealthState.IDLE:
-        break;
-      case HealthState.DAMAGE:
-        this.damageTime += delta;
-        if (this.damageTime >= 250) {
-          this.healthState = HealthState.IDLE;
-          this.setTint(0xffffff);
-          this.damageTime = 0;
-        }
-        break;
     }
   }
 
@@ -136,48 +48,55 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     if (!cursor) {
       return;
     }
-    if (Phaser.Input.Keyboard.JustDown(cursor.space!)) {
-      if (this.activeChest) {
-        const coins = this.activeChest.open();
-        this._coins += coins;
-
-        sceneEvents.emit('player-coins-changed', this._coins);
+    if (Phaser.Input.Keyboard.JustDown(cursor.space)) {
+      if (this.interactWith) {
+        this.interactWith.interact(this)
       } else {
-        this.throwKnife();
+        this.hit();
       }
       return;
     }
-    const speed = 100;
-    const leftDown = cursor.left?.isDown;
-    const rightDown = cursor.right?.isDown;
-    const upDown = cursor.up?.isDown;
-    const downDown = cursor.down?.isDown;
+    const leftDown = -cursor.left?.isDown;
+    const rightDown = +cursor.right?.isDown;
+    const upDown = -cursor.up?.isDown;
+    const downDown = +cursor.down?.isDown;
     if (leftDown) {
       this.anims.play('faune-run-side', true);
-      this.setVelocity(-speed, 0);
       this.scaleX = -1;
       this.body.offset.x = 24;
-    } else if (rightDown) {
+    }
+    else if (rightDown) {
       this.anims.play('faune-run-side', true);
-      this.setVelocity(speed, 0);
       this.scaleX = 1;
       this.body.offset.x = 8;
-    } else if (upDown) {
+    }
+    else if (upDown) {
       this.anims.play('faune-run-up', true);
-      this.setVelocity(0, -speed);
-    } else if (downDown) {
+    }
+    else if (downDown) {
       this.anims.play('faune-run-down', true);
-      this.setVelocity(0, speed);
-    } else {
+    }
+    let speed = 0
+    if (leftDown || rightDown || upDown || downDown) {
+      this.direction = new Phaser.Math.Vector2(rightDown + leftDown, downDown + upDown);
+      speed = this.direction.x && this.direction.y ? this.speed / Math.sqrt(2) : this.speed;
+      this.stopInteract();
+    }
+    else {
       const parts = this.anims.currentAnim.key.split('-');
       parts[1] = 'idle';
       this.anims.play(parts.join('-'));
-      this.setVelocity(0, 0);
     }
+    const dir = this.direction.clone().scale(speed)
+    this.setVelocity(dir.x, dir.y);
+  }
 
-    if (leftDown || rightDown || upDown || downDown) {
-      this.activeChest = undefined;
-    }
+  startInteract(interactive: Interactive) {
+    this.interactWith = interactive;
+  }
+
+  stopInteract() {
+    this.interactWith = null;
   }
 }
 
@@ -190,14 +109,13 @@ Phaser.GameObjects.GameObjectFactory.register(
     texture: string,
     frame?: string | number
   ) {
-    var sprite = new Faune(this.scene, x, y, texture, frame);
+    const sprite = new Faune(this.scene as Scene, x, y, texture, frame);
 
     this.displayList.add(sprite);
     this.updateList.add(sprite);
 
     this.scene.physics.world.enableBody(sprite, Phaser.Physics.Arcade.DYNAMIC_BODY);
-
-    sprite.body.setSize(sprite.width * 0.5, sprite.height * 0.8);
+    sprite.body.setSize(sprite.width * 0.5, sprite.height);
     return sprite;
   }
 );
