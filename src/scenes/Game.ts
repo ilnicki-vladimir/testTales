@@ -28,7 +28,7 @@ export default class Game extends Scene {
   private spriteFactory: SpriteFactory;
 
   private audio;
-  private animatedTiles: AnimatedTiles;
+  private animatedTiles;
 
   constructor() {
     super('game');

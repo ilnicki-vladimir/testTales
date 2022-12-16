@@ -5,24 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8aff81eb-bf59-4245-8a96-7a4c36f25859" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/core/classes/Scene.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/core/enums/character-type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/characters/Faune.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/characters/Faune.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/classes/Character.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Character.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/classes/Factory.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Factory.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/classes/Knifes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Knifes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/classes/MovableSprite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/MovableSprite.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/classes/Sprite.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Sprite.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/classes/Weapon.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/classes/Weapon.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/collisions/collisions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/collisions/collisions.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/enums/direction.enum.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/enums/direction.enum.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/core/interfaces/CollisionConfig.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/core/interfaces/CollisionConfig.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/enemies/Lizard.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/enemies/Lizard.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/items/Chest.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/items/Chest.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/weapons/axe.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/weapons/cleaver.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/weapons/cudgel.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/weapons/cudgel2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/weapons/gold_sword.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/tiles/dungeon-01.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/tiles/dungeon-01.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/tiles/dungeon-01.tmx" beforeDir="false" afterPath="$PROJECT_DIR$/public/tiles/dungeon-01.tmx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/scenes/Game.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/scenes/Game.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
